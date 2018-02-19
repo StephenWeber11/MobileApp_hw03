@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class DataHelpers {
 
-    private static ArrayList<Question> questionDetails = new ArrayList<>();
 
     public static boolean isConnected(Activity activity){
         ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -29,6 +28,8 @@ public class DataHelpers {
     }
 
     public static ArrayList<Question> formatQuestionDetailsString(String questionString){
+        ArrayList<Question> questionDetails = new ArrayList<>();
+
         if(questionString != null && questionString != "") {
             String[] questionDetailsArray = questionString.split(";");
 
@@ -63,16 +64,13 @@ public class DataHelpers {
 
                 }
             }
-            int index = 1;
-            while(questionDetailsArray[index].matches("(?<=\\s|^)\\d+(?=\\s|$)")){
-
-            }
         }
-        logQuestions();
-        return null;
+
+        logQuestions(questionDetails); //For Testing & Debugging...
+        return questionDetails;
     }
 
-    private static void logQuestions(){
+    private static void logQuestions(ArrayList<Question> questionDetails){
         for (Question question : questionDetails) {
             if(question.getQuestion() != null && question.getQuestion() != "") {
                 Log.d("Questions", question.getQuestion());

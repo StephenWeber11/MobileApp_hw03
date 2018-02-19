@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(DataHelpers.isConnected(MainActivity.this)){
-            Log.d("Demo","Fetching data");
+            Log.d("Data","Fetching data");
             new QuestionResource(MainActivity.this).execute("http://dev.theappsdr.com/apis/trivia_json/trivia_text.php");
         }
 
