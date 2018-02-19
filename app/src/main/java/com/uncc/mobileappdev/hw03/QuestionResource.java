@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import static com.uncc.mobileappdev.hw03.DataHelpers.formatQuestionDetailsString;
 
@@ -19,6 +20,7 @@ import static com.uncc.mobileappdev.hw03.DataHelpers.formatQuestionDetailsString
 
 public class QuestionResource extends AsyncTask<String, Void, String> {
     private Activity activity;
+    private ArrayList<Question> questionsData = new ArrayList<>();
 
     public QuestionResource(Activity activity){
         this.activity = activity;
@@ -65,7 +67,7 @@ public class QuestionResource extends AsyncTask<String, Void, String> {
             }
         }
 
-        formatQuestionDetailsString(result);
+        questionsData = formatQuestionDetailsString(result);
         return result;
     }
 
