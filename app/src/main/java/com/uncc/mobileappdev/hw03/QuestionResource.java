@@ -18,16 +18,17 @@ import static com.uncc.mobileappdev.hw03.DataHelpers.formatQuestionDetailsString
  * Created by Stephen Weber on 2/18/2018.
  */
 
-public class QuestionResource extends AsyncTask<String, Void, String> {
+public class QuestionResource extends AsyncTask<String, Void, ArrayList<Question>> {
+    public AsyncResponse delegate = null;
     private Activity activity;
-    private ArrayList<Question> questionsData = new ArrayList<>();
+    private ArrayList<Question> questionData = new ArrayList<>();
 
     public QuestionResource(Activity activity){
         this.activity = activity;
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected ArrayList<Question> doInBackground(String... params) {
         StringBuilder sb = new StringBuilder();
         HttpURLConnection connection = null;
         BufferedReader bufferedReader = null;
@@ -67,14 +68,15 @@ public class QuestionResource extends AsyncTask<String, Void, String> {
             }
         }
 
-        questionsData = formatQuestionDetailsString(result);
-        return result;
+        questionData = formatQuestionDetailsString(result);
+        return questionData;
     }
 
     @Override
-    protected  void onPostExecute(String result){
-        if(result != null){
-            Log.d("Demo", result);
+    protected  void onPostExecute(ArrayList<Question> questionData){
+        if(questionData != null && !questionData.isEmpty()){
+            Log.d("Demo", "Number of Question objects in list: " + questionData.size());
+            delegate.processFinish(questionData);
         } else {
             Log.d("Demo", "NO DATA!");
         }
