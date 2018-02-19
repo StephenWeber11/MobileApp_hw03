@@ -15,7 +15,7 @@ public class Question implements Serializable {
     private String question;
     private String imageURL;
     private ArrayList<String> answers = new ArrayList<>();
-    private int answerIndex;
+    private int answerIndex = 9999;
 
     public int getQuestionIndex() {
         return questionIndex;

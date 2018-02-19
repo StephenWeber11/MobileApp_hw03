@@ -32,24 +32,35 @@ public class DataHelpers {
         if(questionString != null && questionString != "") {
             String[] questionDetailsArray = questionString.split(";");
 
-            /* Not sure what the best way to do this is... */
+            /* Not sure what the best way to do this is... But this works!!!*/
             for(int i=0; i < questionDetailsArray.length - 1; i++){
-                if(i != 0){
+                if(questionDetailsArray[i].matches("(?<=\\s|^)\\d+(?=\\s|$)")){
                     Question question = new Question();
 
-                    if(questionDetailsArray[i].contains("?")) {
-                        question.setQuestion(questionDetailsArray[i]);
+                    for(int j=i+1; j < questionDetailsArray.length -1; j++){
+                        if(question.getAnswerIndex() != 9999){
+                            questionDetails.add(question);
+                            break;
+                        }
+                        if(questionDetailsArray[j].contains("?")) {
+                            question.setQuestion(questionDetailsArray[j]);
+                            question.setImageURL(questionDetailsArray[j+1]);
+
+                            int index = j+2;
+                            ArrayList<String> possibleAnswers = new ArrayList<>();
+                            while(!questionDetailsArray[index].matches("(?<=\\s|^)\\d+(?=\\s|$)")){
+                                possibleAnswers.add(questionDetailsArray[index]);
+                                index++;
+                            }
+                            question.setAnswers(possibleAnswers);
+
+                        }
+                        if(questionDetailsArray[j].matches("(?<=\\s|^)\\d+(?=\\s|$)")){
+                            question.setAnswerIndex(Integer.parseInt(questionDetailsArray[j]));
+                        }
+
                     }
-//                    else if(questionDetailsArray[i].contains("http")){
-//                        question.setImageURL(questionDetailsArray[i]);
-//                    }
-//                    else if(questionDetailsArray[i-1].contains("http") || questionDetailsArray[i+1]){
-//
-//                    }
-                    else if(questionDetailsArray[i].matches("(?<=\\s|^)\\d+(?=\\s|$)")){
-                        question.setAnswerIndex(Integer.parseInt(questionDetailsArray[i]));
-                    }
-                    questionDetails.add(question);
+
                 }
             }
             int index = 1;
@@ -65,6 +76,10 @@ public class DataHelpers {
         for (Question question : questionDetails) {
             if(question.getQuestion() != null && question.getQuestion() != "") {
                 Log.d("Questions", question.getQuestion());
+                Log.d("ImageURL", question.getImageURL());
+                for(String str : question.getAnswers()){
+                    Log.d("Answer: ", str);
+                }
                 Log.d("AnswerIndex", question.getAnswerIndex()+"");
             }
         }
