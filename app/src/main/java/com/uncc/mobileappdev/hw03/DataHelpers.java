@@ -39,7 +39,7 @@ public class DataHelpers {
                     Question question = new Question();
 
                     for(int j=i+1; j < questionDetailsArray.length -1; j++){
-                        if(question.getAnswerIndex() != 9999){
+                        if(question.getAnswerIndex() != Integer.MAX_VALUE){
                             questionDetails.add(question);
                             break;
                         }

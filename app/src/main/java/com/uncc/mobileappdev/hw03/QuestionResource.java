@@ -3,6 +3,7 @@ package com.uncc.mobileappdev.hw03;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Spinner;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,12 +20,17 @@ import static com.uncc.mobileappdev.hw03.DataHelpers.formatQuestionDetailsString
  */
 
 public class QuestionResource extends AsyncTask<String, Void, ArrayList<Question>> {
+
+    public interface AsyncResponse{
+        void processFinish(ArrayList<Question> questionDetails);
+    }
+
     public AsyncResponse delegate = null;
     private Activity activity;
     private ArrayList<Question> questionData = new ArrayList<>();
 
-    public QuestionResource(Activity activity){
-        this.activity = activity;
+    public QuestionResource(AsyncResponse delegate){
+        this.delegate = delegate;
     }
 
     @Override
